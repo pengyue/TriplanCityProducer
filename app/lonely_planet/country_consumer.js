@@ -4,7 +4,7 @@ const APP_VERSION =
 const APP_NAME =
     process.env.APP_NAME ? process.env.APP_NAME : "triplan-city-producer";
 
-const TOPIC_NAME =
+const COUNTRY_TOPIC_NAME =
     process.env.PRODUCER_KAFKA_COUNTRY_TOPIC_NAME
         ? process.env.PRODUCER_KAFKA_COUNTRY_TOPIC_NAME
         : "test1";
@@ -49,8 +49,8 @@ var kafka = require('kafka-node');
 var client;
 
 console.log("Running Module " + APP_NAME + " version " + APP_VERSION);
-console.log("Event Hub Topic " + TOPIC_NAME);
-var topics = [TOPIC_NAME];
+console.log("Event Hub Topic " + COUNTRY_TOPIC_NAME);
+var topics = [COUNTRY_TOPIC_NAME];
 
 var consumerOptions = {
     host: KAFKA_HOST,
@@ -67,11 +67,10 @@ consumerGroup.on('message', onMessage);
 
 console.log('Start to connect to KAFKA topic ...');
 consumerGroup.on('connect', function () {
-    console.log('connected to ' + TOPIC_NAME + " at " + KAFKA_BROKER_IP);
+    console.log('Connected to ' + COUNTRY_TOPIC_NAME + " at " + KAFKA_BROKER_IP);
 })
 
 function onMessage(message) {
-    console.log(message);
     console.log(
         '%s read msg Topic="%s" Partition=%s Offset=%d Key=%s Value=%s',
         this.client.clientId, message.topic, message.partition, message.offset, message.key, message.value
@@ -84,7 +83,7 @@ function onMessage(message) {
             return;
         }
 
-        console.log('url::::::::::::::' + country.country_url);
+        console.log('URL extracted : ' + country.country_url);
         cityProducer.run(country.country_url);
 
     } catch (e) {
@@ -99,6 +98,12 @@ function onError(error) {
 
 process.on('unhandledRejection', (reason, promise) => {
     console.log('Unhandled Rejection at:', reason.stack || reason)
+    // Recommended: send the information to sentry.io
+    // or whatever crash reporting service you use
+})
+
+process.on('unhandledError', (reason, promise) => {
+    console.log('Unhandled Error at:', reason.stack || reason)
     // Recommended: send the information to sentry.io
     // or whatever crash reporting service you use
 })

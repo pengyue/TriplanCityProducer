@@ -1,7 +1,7 @@
 'use strict';
 
 // Constants
-const PORT = (process.env.PRODUCER_NODE_UI_LISTEN_PORT) ? process.env.PRODUCER_NODE_UI_LISTEN_PORT : 80;
+const PORT = (process.env.APP_HTTP_PORT) ? process.env.APP_HTTP_PORT : 8086;
 const HOST = '0.0.0.0';
 const HEALTH_LIVENESS = "/health-liveness";
 const HEALTH_READINESS = "/health-readiness";
@@ -11,15 +11,10 @@ const app  = express();
 
 //health check
 app.get(HEALTH_LIVENESS, function (req, res) {
-	res.send ("Health liveness passed");
+	res.send("Health liveness passed");
 });
 app.get(HEALTH_READINESS, function (req, res) {
-	res.send ("Health readiness passed");
-});
-
-// App
-app.get('/', function (req, res) {
-  res.render('index');
+	res.send("Health readiness passed");
 });
 
 app.listen(PORT, HOST);
