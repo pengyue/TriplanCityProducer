@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: triplan-city-producer-ingress
+  namespace: triplan
+spec:
+  rules:
+    - host: triplan.ml10.home
+      http:
+        paths:
+          - backend:
+              serviceName: triplan-city-producer-service
+              servicePort: 80
+            path: /
+
