@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: app
+  name: city-app
   namespace: triplan
 data:
   app-version: 0.1.0
