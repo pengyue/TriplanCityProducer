@@ -1,5 +1,7 @@
 'use strict';
 
+require('events').EventEmitter.defaultMaxListeners = 0
+
 process.on('unhandledRejection', (reason, promise) => {
     console.log('Unhandled Rejection at:', reason.stack || reason)
 })
