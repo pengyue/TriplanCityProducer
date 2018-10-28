@@ -17,8 +17,8 @@ module.exports = {
 
 
     COUNTRY_TOPIC_NAME:
-        process.env.PRODUCER_KAFKA_COUNTRY_TOPIC_NAME
-            ? process.env.PRODUCER_KAFKA_COUNTRY_TOPIC_NAME
+        process.env.CONSUMER_KAFKA_COUNTRY_TOPIC_NAME
+            ? process.env.CONSUMER_KAFKA_COUNTRY_TOPIC_NAME
             : "triplan-country",
 
     CONSUMER_OPTION_SESSION_TIMEOUT:
