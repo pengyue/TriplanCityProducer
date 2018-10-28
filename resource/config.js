@@ -19,7 +19,7 @@ module.exports = {
     COUNTRY_TOPIC_NAME:
         process.env.PRODUCER_KAFKA_COUNTRY_TOPIC_NAME
             ? process.env.PRODUCER_KAFKA_COUNTRY_TOPIC_NAME
-            : "prototype-country",
+            : "triplan-country",
 
     CONSUMER_OPTION_SESSION_TIMEOUT:
         process.env.CONSUMER_OPTION_SESSION_TIMEOUT
@@ -49,7 +49,7 @@ module.exports = {
     CITY_TOPIC_NAME:
         process.env.PRODUCER_KAFKA_CITY_TOPIC_NAME
             ? process.env.PRODUCER_KAFKA_CITY_TOPIC_NAME
-            : "prototype-top-10-cities",
+            : "lonely-planet-top-10-cities",
 
     CITY_TOPIC_KEY:
         process.env.PRODUCER_KAFKA_CITY_TOPIC_KEY

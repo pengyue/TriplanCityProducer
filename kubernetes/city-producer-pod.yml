@@ -1,0 +1,127 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: triplan-city-producer
+  labels:
+    app: triplan-city-producer
+spec:
+  containers:
+  - name: triplan-city-producer
+    image: pengyue/triplan-city-producer
+    ports:
+      - containerPort: 8110
+        protocol: TCP
+    livenessProbe:
+      httpGet:
+        path: /health-liveness
+        port: 8110
+        scheme: HTTP
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 5
+      successThreshold: 1
+      failureThreshold: 3
+    readinessProbe:
+      httpGet:
+        path: /health-readiness
+        port: 8110
+        scheme: HTTP
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 5
+      successThreshold: 1
+      failureThreshold: 3
+    env:
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    - name: APP_NAME
+      value: triplan-city-producer
+    - name: APP_VERSION
+      valueFrom:
+        configMapKeyRef:
+          name: city-app
+          key: app-version
+    - name: APP_HTTP_PORT
+      valueFrom:
+        configMapKeyRef:
+          name: city-app
+          key: app-http-port
+
+    - name: KAFKA_BROKER_IP
+      valueFrom:
+        configMapKeyRef:
+          name: kafka
+          key: broker-ip
+    - name: KAFKA_BROKER_PORT
+      valueFrom:
+        configMapKeyRef:
+          name: kafka
+          key: broker-port
+    - name: KAFKA_ZOOKEEPER_HOST_IP
+      valueFrom:
+        configMapKeyRef:
+          name: kafka
+          key: zookeeper-host-ip
+    - name: KAFKA_ZOOKEEPER_HOST_PORT
+      valueFrom:
+        configMapKeyRef:
+          name: kafka
+          key: zookeeper-host-port
+
+    - name: CONSUMER_LONELY_PLANET_BASE_URL
+      valueFrom:
+        configMapKeyRef:
+          name: country-consumer
+          key: lonely-planet-base-url
+    - name: CONSUMER_KAFKA_COUNTRY_TOPIC_NAME
+      valueFrom:
+        configMapKeyRef:
+          name: country-consumer
+          key: kafka-country-topic-name
+    - name: CONSUMER_OPTION_PROTOCOL
+      valueFrom:
+        configMapKeyRef:
+          name: country-consumer
+          key: consumer-option-protocol
+    - name: CONSUMER_OPTION_FROM_OFFSET
+      valueFrom:
+        configMapKeyRef:
+          name: country-consumer
+          key: consumer-option-from-offset
+    - name: CONSUMER_OPTION_CONSUMER_GROUP_ID
+      valueFrom:
+        configMapKeyRef:
+          name: country-consumer
+          key: consumer-option-consumer-group-id
+    - name: COUNTRIES_TOPIC_CONSUMER_ID
+      valueFrom:
+        configMapKeyRef:
+          name: country-consumer
+          key: countries-topic-consumer-id
+    - name: CONSUMER_OPTION_SESSION_TIMEOUT
+      valueFrom:
+        configMapKeyRef:
+          name: country-consumer
+          key: consumer-option-session-timeout
+    - name: PRODUCER_KAFKA_CITY_TOPIC_NAME
+      valueFrom:
+        configMapKeyRef:
+          name: city-producer
+          key: kafka-city-topic-name
+    - name: PRODUCER_KAFKA_CITY_TOPIC_KEY
+      valueFrom:
+        configMapKeyRef:
+          name: city-producer
+          key: kafka-city-topic-key
+    - name: PRODUCER_LONELY_PLANET_BASE_URL
+      valueFrom:
+        configMapKeyRef:
+          name: city-producer
+          key: lonely-planet-base-url
+

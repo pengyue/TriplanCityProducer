@@ -6,8 +6,6 @@ const client = new kafka.KafkaClient({ kafkaHost: config.KAFKA_BROKER_IP });
 
 const countryConsumer = module.exports;
 
-
-
 countryConsumer.run = async () => {
 
     kafkaConsumer
